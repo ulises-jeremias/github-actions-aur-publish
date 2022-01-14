@@ -1,6 +1,6 @@
 name: "Publish AUR package"
 description: "Publish an AUR package"
-author: KSXGitHub
+author: ulises-jeremias
 branding:
   color: blue
   icon: package
