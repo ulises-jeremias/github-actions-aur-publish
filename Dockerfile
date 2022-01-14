@@ -29,5 +29,5 @@ RUN pacman -Syu --noconfirm && \
     ncurses \
     util-linux
 
-CMD ["runuser", "builder", "--command", "'bash -l -c /build.sh'"]
 ENTRYPOINT ["/entrypoint.sh"]
+CMD ["runuser", "builder", "--command", "'bash -l -c /build.sh'"]
