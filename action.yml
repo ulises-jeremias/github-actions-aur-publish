@@ -1,4 +1,4 @@
-name: "Publish AUR package"
+name: "AUR Publish"
 description: "Publish an AUR package"
 author: ulises-jeremias
 branding:
