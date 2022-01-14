@@ -1,45 +1,49 @@
-name: 'Publish AUR package'
-description: 'Publish an AUR package'
+name: "Publish AUR package"
+description: "Publish an AUR package"
 author: KSXGitHub
 branding:
   color: blue
   icon: package
 inputs:
   pkgname:
-    description: 'AUR package name'
+    description: "AUR package name"
     required: true
   pkgbuild:
-    description: 'Path to PKGBUILD file'
+    description: "Path to PKGBUILD file"
     required: true
   assets:
-    description: 'Newline-separated glob patterns for additional files to be added to the AUR repository'
+    description: "Newline-separated glob patterns for additional files to be added to the AUR repository"
     required: false
-    default: ''
+    default: ""
   commit_username:
-    description: 'The username to use when creating the new commit'
+    description: "The username to use when creating the new commit"
     required: true
   commit_email:
-    description: 'The email to use when creating the new commit'
+    description: "The email to use when creating the new commit"
     required: true
   ssh_private_key:
-    description: 'Your private key with access to AUR package.'
+    description: "Your private key with access to AUR package."
     required: true
   commit_message:
-    description: 'Commit message to use when creating the new commit'
+    description: "Commit message to use when creating the new commit"
     required: false
-    default: 'Update PKGBUILD and .SRCINFO with GitHub Actions'
+    default: "Update PKGBUILD and .SRCINFO with GitHub Actions"
   allow_empty_commits:
-    description: 'Allow empty commits, i.e. commits with no change.'
+    description: "Allow empty commits, i.e. commits with no change."
     required: false
-    default: 'true'
+    default: "true"
   force_push:
-    description: 'Use --force when push to the AUR.'
+    description: "Use --force when push to the AUR."
     required: false
-    default: 'false'
+    default: "false"
   ssh_keyscan_types:
-    description: 'Comma-separated list of types to use when adding aur.archlinux.org to known hosts'
+    description: "Comma-separated list of types to use when adding aur.archlinux.org to known hosts"
     required: false
-    default: 'rsa,dsa,ecdsa,ed25519'
+    default: "rsa,dsa,ecdsa,ed25519"
+  update_pkgver:
+    description: "Run `makepkg -od` to update `pkgver`. Requires that the `pkgver()` function defined in the `PKGBUILD` file doesn't required any dependencies other than git"
+    required: false
+    default: "false"
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: "docker"
+  image: "Dockerfile"

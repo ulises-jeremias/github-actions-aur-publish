@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -o errexit -o pipefail -o nounset
 
@@ -15,4 +15,4 @@ chown -vR builder:builder /home/builder
 chmod -vR 600 /home/builder/.ssh/*
 echo '::endgroup::'
 
-exec runuser builder --command 'bash -l -c /build.sh'
+exec "$@"

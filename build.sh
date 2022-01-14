@@ -1,5 +1,4 @@
-#!/bin/bash
-# shellcheck disable=SC2024
+#!/usr/bin/env bash
 
 set -o errexit -o pipefail -o nounset
 
@@ -13,6 +12,7 @@ commit_message=$INPUT_COMMIT_MESSAGE
 allow_empty_commits=$INPUT_ALLOW_EMPTY_COMMITS
 force_push=$INPUT_FORCE_PUSH
 ssh_keyscan_types=$INPUT_SSH_KEYSCAN_TYPES
+update_pkgver=$INPUT_UPDATE_PKGVER
 
 assert_non_empty() {
   name=$1
@@ -28,8 +28,6 @@ assert_non_empty inputs.pkgbuild "$pkgbuild"
 assert_non_empty inputs.commit_username "$commit_username"
 assert_non_empty inputs.commit_email "$commit_email"
 assert_non_empty inputs.ssh_private_key "$ssh_private_key"
-
-export HOME=/home/builder
 
 # Ignore "." and ".." to prevent errors when glob pattern for assets matches hidden files
 GLOBIGNORE=".:.."
@@ -66,9 +64,24 @@ echo '::group::Copying files into /tmp/local-repo'
 # Ignore quote rule because we need to expand glob patterns to copy $assets
 if [[ -n "$assets" ]]; then
   echo 'Copying' $assets
-  cp -rt /tmp/local-repo/ $assets
+  cp -vrt /tmp/local-repo/ $assets
 fi
 echo '::endgroup::'
+
+if [ "$update_pkgver" = "true" ]; then
+  echo '::group::Updating pkgver'
+  echo 'Running `makepkg -od` to update pkgver'
+
+  # Update the pkgver in a temp folder
+  tmp_makepkg=$(mktemp -d)
+  cp -r /tmp/local-repo/. $tmp_makepkg
+  (cd $tmp_makepkg && makepkg -od)
+
+  # Copy the PKGBUILD back
+  cp $tmp_makepkg/PKGBUILD /tmp/local-repo/
+
+  echo '::endgroup::'
+fi
 
 echo '::group::Generating .SRCINFO'
 cd /tmp/local-repo
