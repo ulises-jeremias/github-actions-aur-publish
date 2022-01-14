@@ -30,4 +30,3 @@ RUN pacman -Syu --noconfirm && \
     util-linux
 
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["runuser", "builder", "--command", "'bash -l -c /build.sh'"]

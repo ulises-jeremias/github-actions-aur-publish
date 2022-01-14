@@ -15,4 +15,4 @@ chown -vR builder:builder /home/builder
 chmod -vR 600 /home/builder/.ssh/*
 echo '::endgroup::'
 
-exec $@
+exec runuser builder --command 'bash -l -c /build.sh'
