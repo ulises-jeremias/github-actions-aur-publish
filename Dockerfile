@@ -15,7 +15,6 @@ RUN pacman -Syu --noconfirm && \
     binutils \
     gcc \
     awk \
-    binutils \
     xz \
     libarchive \
     bzip2 \
