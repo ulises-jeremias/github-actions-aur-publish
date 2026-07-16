@@ -87,3 +87,11 @@ jobs:
 ## License
 
 [MIT](https://github.com/ulises-jeremias/github-actions-aur-publish/blob/main/LICENSE)
+
+## 👥 Contributors
+
+<a href="https://github.com/ulises-jeremias/github-actions-aur-publish/contributors">
+  <img src="https://contrib.rocks/image?repo=ulises-jeremias/github-actions-aur-publish"/>
+</a>
+
+Made with [contributors-img](https://contrib.rocks).
