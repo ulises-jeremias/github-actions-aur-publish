@@ -1,5 +1,7 @@
 # Publish AUR package
 
+[![Discord](https://img.shields.io/discord/1527933660764831825?label=Discord&logo=discord&logoColor=white)](https://discord.gg/dwFTsR7fK2)
+
 GitHub Actions to publish AUR package.
 
 ## Inputs
