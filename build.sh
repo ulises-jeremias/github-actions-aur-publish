@@ -34,14 +34,22 @@ assert_non_empty inputs.ssh_private_key "$ssh_private_key"
 # Ignore "." and ".." to prevent errors when glob pattern for assets matches hidden files
 GLOBIGNORE=".:.."
 
-# Drop DSA — modern OpenSSH rejects it ("Unknown key type dsa")
-ssh_keyscan_types=${ssh_keyscan_types//dsa,/}
-ssh_keyscan_types=${ssh_keyscan_types//,dsa/}
-ssh_keyscan_types=${ssh_keyscan_types//dsa/}
-if [[ -z "$ssh_keyscan_types" ]]; then
+# Drop DSA — modern OpenSSH rejects it ("Unknown key type dsa").
+# Must filter whole tokens only (naive ${var//dsa/} corrupts "ecdsa").
+_filtered_types=()
+IFS=',' read -ra _raw_types <<<"$ssh_keyscan_types"
+for _t in "${_raw_types[@]}"; do
+  _t_trimmed="${_t// /}"
+  if [[ -n "$_t_trimmed" && "$_t_trimmed" != "dsa" ]]; then
+    _filtered_types+=("$_t_trimmed")
+  fi
+done
+if [[ ${#_filtered_types[@]} -eq 0 ]]; then
   ssh_keyscan_types="rsa,ecdsa,ed25519"
+else
+  ssh_keyscan_types=$(IFS=,; echo "${_filtered_types[*]}")
 fi
-
+echo "ssh-keyscan types: $ssh_keyscan_types"
 echo '::group::Adding aur.archlinux.org to known hosts'
 ssh-keyscan -v -t "$ssh_keyscan_types" aur.archlinux.org >>~/.ssh/known_hosts
 echo '::endgroup::'
