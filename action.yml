@@ -44,6 +44,14 @@ inputs:
     description: "Run `makepkg -od` to update `pkgver`. Requires that the `pkgver()` function defined in the `PKGBUILD` file doesn't required any dependencies other than git"
     required: false
     default: "false"
+  push_retries:
+    description: "How many times to retry git push (AUR maintenance / network flakes)"
+    required: false
+    default: "12"
+  push_retry_seconds:
+    description: "Seconds to wait between push retries"
+    required: false
+    default: "20"
 runs:
   using: "docker"
   image: "Dockerfile"
