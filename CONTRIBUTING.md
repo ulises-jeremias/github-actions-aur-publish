@@ -21,6 +21,10 @@ basics for first-time contributors.
 No other dependencies are required. The action itself runs inside the
 Arch Linux container.
 
+Optional: install [pre-commit](https://pre-commit.com/) and run
+`pre-commit install` to get whitespace, YAML, ShellCheck, and behavior-test
+checks on every commit.
+
 ## Testing changes
 
 - Run ShellCheck on both scripts:

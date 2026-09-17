@@ -1,0 +1,23 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+      - id: check-merge-conflict
+  - repo: local
+    hooks:
+      - id: shellcheck
+        name: shellcheck
+        entry: shellcheck
+        language: system
+        types: [shell]
+        args: [build.sh, entrypoint.sh, tests/run.sh]
+        pass_filenames: false
+      - id: behavior-tests
+        name: behavior-tests
+        entry: bash tests/run.sh
+        language: system
+        pass_filenames: false
