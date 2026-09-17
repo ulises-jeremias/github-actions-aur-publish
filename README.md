@@ -330,6 +330,8 @@ See [docs/MIGRATION.md](./docs/MIGRATION.md) for an input-by-input mapping.
 Tag releases, PR dry-runs, scheduled refreshes, and exact-mirror setups:
 [docs/EXAMPLES.md](./docs/EXAMPLES.md).
 
+Questions? [docs/FAQ.md](./docs/FAQ.md) covers the common ones.
+
 ## Acknowledgments
 
 Design ideas such as the privilege-separated builder user, configurable

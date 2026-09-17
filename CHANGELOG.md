@@ -40,6 +40,7 @@ Copy the draft's contents here as part of cutting a release.
 - CI and release badges in README.
 - Migration guide from KSXGitHub/github-actions-deploy-aur.
 - Examples gallery (tag releases, PR dry-runs, scheduled refreshes, mirrors).
+- FAQ (assets vs asset_dir, empty commits, DSA filtering, retries, pinning).
 
 ## [v1.1.0] - 2026-09-17
 
