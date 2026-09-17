@@ -74,6 +74,16 @@ GitHub Action to publish a package to the [Arch User Repository (AUR)](https://a
   **Optional** Update checksums using `updpkgsums` before generating `.SRCINFO`.
   The default value is `false`.
 
+- `test`
+
+  **Optional** Check that the PKGBUILD can be built before publishing.
+  The default value is `false`.
+
+- `test_flags`
+
+  **Optional** Command line flags for `makepkg` when `test` is enabled.
+  The default flags are `--clean --cleanbuild --nodeps`.
+
 - `aur_branch`
 
   **Optional** Branch to push to on the AUR remote. The default value is `master`

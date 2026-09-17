@@ -15,6 +15,8 @@ force_push=$INPUT_FORCE_PUSH
 ssh_keyscan_types=$INPUT_SSH_KEYSCAN_TYPES
 update_pkgver=$INPUT_UPDATE_PKGVER
 updpkgsums=${INPUT_UPDPKGSUMS:-false}
+test_pkgbuild=${INPUT_TEST:-false}
+test_flags=${INPUT_TEST_FLAGS:---clean --cleanbuild --nodeps}
 aur_branch=${INPUT_AUR_BRANCH:-master}
 push_retries=${INPUT_PUSH_RETRIES:-12}
 push_retry_seconds=${INPUT_PUSH_RETRY_SECONDS:-20}
@@ -162,6 +164,18 @@ echo '::group::Generating .SRCINFO'
 cd /tmp/local-repo
 makepkg --printsrcinfo >.SRCINFO
 echo '::endgroup::'
+
+if [[ "$test_pkgbuild" == "true" ]]; then
+  echo '::group::Testing package build'
+  echo "Running makepkg $test_flags"
+  # shellcheck disable=SC2206
+  _flags=($test_flags)
+  makepkg "${_flags[@]}"
+  echo '::endgroup::'
+elif [[ "$test_pkgbuild" != "false" ]]; then
+  echo "::error::Invalid Value: inputs.test is neither 'true' nor 'false': '$test_pkgbuild'"
+  exit 5
+fi
 
 echo '::group::Committing files to the repository'
 if [[ -z "$assets" ]]; then

@@ -19,6 +19,8 @@ Copy the draft's contents here as part of cutting a release.
   optional when `asset_dir` is used.
 - `updpkgsums` input: refresh checksums with `updpkgsums` before publishing
   (adds `pacman-contrib` to the image).
+- `test`/`test_flags` inputs: opt-in `makepkg` trial build before publishing
+  (invalid values fail with exit code 5).
 
 ## [v1.1.0] - 2026-09-17
 
