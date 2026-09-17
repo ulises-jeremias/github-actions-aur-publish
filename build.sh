@@ -17,6 +17,7 @@ update_pkgver=$INPUT_UPDATE_PKGVER
 updpkgsums=${INPUT_UPDPKGSUMS:-false}
 test_pkgbuild=${INPUT_TEST:-false}
 test_flags=${INPUT_TEST_FLAGS:---clean --cleanbuild --nodeps}
+post_process=${INPUT_POST_PROCESS:-}
 aur_branch=${INPUT_AUR_BRANCH:-master}
 push_retries=${INPUT_PUSH_RETRIES:-12}
 push_retry_seconds=${INPUT_PUSH_RETRY_SECONDS:-20}
@@ -175,6 +176,12 @@ if [[ "$test_pkgbuild" == "true" ]]; then
 elif [[ "$test_pkgbuild" != "false" ]]; then
   echo "::error::Invalid Value: inputs.test is neither 'true' nor 'false': '$test_pkgbuild'"
   exit 5
+fi
+
+if [[ -n "$post_process" ]]; then
+  echo '::group::Running post-processing hook'
+  eval "$post_process"
+  echo '::endgroup::'
 fi
 
 echo '::group::Committing files to the repository'

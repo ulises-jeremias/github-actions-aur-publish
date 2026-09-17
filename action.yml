@@ -65,6 +65,10 @@ inputs:
     description: "Command line flags for makepkg when test is enabled"
     required: false
     default: "--clean --cleanbuild --nodeps"
+  post_process:
+    description: "Commands to execute after processing the package, before committing"
+    required: false
+    default: ""
   push_retries:
     description: "How many times to retry git push (AUR maintenance / network flakes)"
     required: false

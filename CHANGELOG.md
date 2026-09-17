@@ -21,6 +21,8 @@ Copy the draft's contents here as part of cutting a release.
   (adds `pacman-contrib` to the image).
 - `test`/`test_flags` inputs: opt-in `makepkg` trial build before publishing
   (invalid values fail with exit code 5).
+- `post_process` input: escape-hatch hook evaluated after processing the
+  package, before committing.
 
 ## [v1.1.0] - 2026-09-17
 

@@ -84,6 +84,13 @@ GitHub Action to publish a package to the [Arch User Repository (AUR)](https://a
   **Optional** Command line flags for `makepkg` when `test` is enabled.
   The default flags are `--clean --cleanbuild --nodeps`.
 
+- `post_process`
+
+  **Optional** Commands to execute after processing the package, before
+  committing — an escape hatch for tweaks the action doesn't cover
+  (e.g. appending a footer to the generated files). Runs with `eval` inside
+  the prepared repository, so only use commands you trust.
+
 - `aur_branch`
 
   **Optional** Branch to push to on the AUR remote. The default value is `master`
