@@ -34,6 +34,7 @@ Copy the draft's contents here as part of cutting a release.
 - `package_version` output: `pkgver` of the published package.
 - `tests/run.sh`: durable behavior tests (input validation, PKGBUILD checks,
   action/README consistency), wired into CI.
+- Bug/feature issue forms and a PR checklist template.
 
 ## [v1.1.0] - 2026-09-17
 

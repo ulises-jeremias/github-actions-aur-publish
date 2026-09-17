@@ -1,0 +1,34 @@
+name: Bug report
+description: Report a problem with the action
+labels: [bug]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Action version
+      description: Tag or SHA pinned in your workflow (e.g. v1.1.0)
+      placeholder: v1.1.0
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you expect, and what did you get instead? Paste the relevant workflow log excerpt.
+    validations:
+      required: true
+  - type: textarea
+    id: inputs
+    attributes:
+      label: Inputs used
+      description: The `with:` block from your workflow (redact secrets and keys).
+      render: yaml
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I redacted secrets and private keys from the logs above
+          required: true
