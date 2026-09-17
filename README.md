@@ -91,6 +91,12 @@ GitHub Action to publish a package to the [Arch User Repository (AUR)](https://a
   (e.g. appending a footer to the generated files). Runs with `eval` inside
   the prepared repository, so only use commands you trust.
 
+- `dry_run`
+
+  **Optional** Validate and prepare everything, then show what would be
+  published without committing or pushing. Useful to trial workflow changes
+  safely. The default value is `false`.
+
 - `aur_branch`
 
   **Optional** Branch to push to on the AUR remote. The default value is `master`

@@ -18,6 +18,7 @@ updpkgsums=${INPUT_UPDPKGSUMS:-false}
 test_pkgbuild=${INPUT_TEST:-false}
 test_flags=${INPUT_TEST_FLAGS:---clean --cleanbuild --nodeps}
 post_process=${INPUT_POST_PROCESS:-}
+dry_run=${INPUT_DRY_RUN:-false}
 aur_branch=${INPUT_AUR_BRANCH:-master}
 push_retries=${INPUT_PUSH_RETRIES:-12}
 push_retry_seconds=${INPUT_PUSH_RETRY_SECONDS:-20}
@@ -182,6 +183,18 @@ if [[ -n "$post_process" ]]; then
   echo '::group::Running post-processing hook'
   eval "$post_process"
   echo '::endgroup::'
+fi
+
+if [[ "$dry_run" == "true" ]]; then
+  echo '::group::Dry run — nothing will be committed or pushed'
+  git status --short
+  git diff
+  echo "Dry run complete: commit and push skipped."
+  echo '::endgroup::'
+  exit 0
+elif [[ "$dry_run" != "false" ]]; then
+  echo "::error::Invalid Value: inputs.dry_run is neither 'true' nor 'false': '$dry_run'"
+  exit 6
 fi
 
 echo '::group::Committing files to the repository'

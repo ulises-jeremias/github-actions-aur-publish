@@ -23,6 +23,8 @@ Copy the draft's contents here as part of cutting a release.
   (invalid values fail with exit code 5).
 - `post_process` input: escape-hatch hook evaluated after processing the
   package, before committing.
+- `dry_run` input: prepare and preview the publish without committing or
+  pushing (invalid values fail with exit code 6).
 
 ## [v1.1.0] - 2026-09-17
 

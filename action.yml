@@ -69,6 +69,10 @@ inputs:
     description: "Commands to execute after processing the package, before committing"
     required: false
     default: ""
+  dry_run:
+    description: "Validate, prepare and show what would be published without committing or pushing"
+    required: false
+    default: "false"
   push_retries:
     description: "How many times to retry git push (AUR maintenance / network flakes)"
     required: false
