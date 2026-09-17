@@ -116,6 +116,7 @@ GitHub Action to publish a package to the [Arch User Repository (AUR)](https://a
 - `commit_sha` — SHA of the commit published to the AUR.
 - `package_url` — URL of the AUR package page
   (`https://aur.archlinux.org/packages/<pkgname>`).
+- `package_version` — `pkgver` of the published package.
 
 ```yaml
 - name: Publish AUR package

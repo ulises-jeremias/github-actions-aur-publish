@@ -25,6 +25,7 @@ Copy the draft's contents here as part of cutting a release.
   package, before committing.
 - `dry_run` input: prepare and preview the publish without committing or
   pushing (invalid values fail with exit code 6).
+- `package_version` output: `pkgver` of the published package.
 
 ## [v1.1.0] - 2026-09-17
 

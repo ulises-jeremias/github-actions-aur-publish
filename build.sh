@@ -198,10 +198,12 @@ elif [[ "$dry_run" != "false" ]]; then
 fi
 
 echo '::group::Committing files to the repository'
-if [[ -z "$assets" ]]; then
+if [[ -z "$assets" && -z "$asset_dir" ]]; then
   git add -fv PKGBUILD .SRCINFO
 else
+  # assets/asset_dir mode: stage everything, including propagated deletions
   git add --all
+  git add -fv PKGBUILD .SRCINFO
 fi
 
 # Empty AUR repos have no HEAD yet — git diff-index HEAD would fail.
@@ -275,10 +277,15 @@ fi
 
 rev=$(git rev-parse HEAD)
 package_url="https://aur.archlinux.org/packages/${pkgname}"
+package_version=$(grep -E '^[[:space:]]*pkgver=' PKGBUILD | head -1 | cut -d= -f2)
 echo "commit_sha=${rev}"
 echo "package_url=${package_url}"
+echo "package_version=${package_version}"
 if [[ -n "${GITHUB_OUTPUT:-}" ]]; then
-  echo "commit_sha=${rev}" >>"$GITHUB_OUTPUT"
-  echo "package_url=${package_url}" >>"$GITHUB_OUTPUT"
+  {
+    echo "commit_sha=${rev}"
+    echo "package_url=${package_url}"
+    echo "package_version=${package_version}"
+  } >>"$GITHUB_OUTPUT"
 fi
 echo '::endgroup::'

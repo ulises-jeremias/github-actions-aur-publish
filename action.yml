@@ -86,6 +86,8 @@ outputs:
     description: "SHA of the commit published to the AUR"
   package_url:
     description: "URL of the AUR package page"
+  package_version:
+    description: "pkgver of the published package"
 runs:
   using: "docker"
   image: "Dockerfile"
