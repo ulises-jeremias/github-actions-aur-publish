@@ -61,3 +61,10 @@ jobs:
           tar xzf actionlint.tar.gz actionlint
           ./actionlint .github/workflows/*.yml
           rm -f actionlint actionlint.tar.gz
+
+  hadolint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Run hadolint
+        run: docker run --rm -v "$PWD/Dockerfile:/Dockerfile:ro" hadolint/hadolint@sha256:32dac94127fd60b7b7e3fbfc65e1383b9b5e25c9bfd7b8536de7a539fe68a12d hadolint /Dockerfile

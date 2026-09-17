@@ -16,6 +16,7 @@ Copy the draft's contents here as part of cutting a release.
 
 - Pinned third-party Actions by commit SHA in all workflows.
 - CI now lints workflow files with actionlint.
+- CI now lints the Dockerfile with hadolint (digest-pinned image).
 
 ### Added
 
