@@ -53,6 +53,10 @@ inputs:
     description: "Branch to push to on the AUR remote (AUR uses master)"
     required: false
     default: "master"
+  updpkgsums:
+    description: "Update checksums using updpkgsums"
+    required: false
+    default: "false"
   push_retries:
     description: "How many times to retry git push (AUR maintenance / network flakes)"
     required: false

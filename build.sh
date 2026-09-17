@@ -14,6 +14,7 @@ allow_empty_commits=$INPUT_ALLOW_EMPTY_COMMITS
 force_push=$INPUT_FORCE_PUSH
 ssh_keyscan_types=$INPUT_SSH_KEYSCAN_TYPES
 update_pkgver=$INPUT_UPDATE_PKGVER
+updpkgsums=${INPUT_UPDPKGSUMS:-false}
 aur_branch=${INPUT_AUR_BRANCH:-master}
 push_retries=${INPUT_PUSH_RETRIES:-12}
 push_retry_seconds=${INPUT_PUSH_RETRY_SECONDS:-20}
@@ -136,6 +137,13 @@ else
   fi
 fi
 echo '::endgroup::'
+
+if [ "$updpkgsums" = "true" ]; then
+  echo '::group::Updating checksums'
+  echo "Running updpkgsums to refresh checksums"
+  (cd /tmp/local-repo && updpkgsums)
+  echo '::endgroup::'
+fi
 
 if [ "$update_pkgver" = "true" ]; then
   echo '::group::Updating pkgver'

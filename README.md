@@ -69,6 +69,11 @@ GitHub Action to publish a package to the [Arch User Repository (AUR)](https://a
   function defined in the `PKGBUILD` file doesn't require any dependencies other than git.
   The default value is `false`.
 
+- `updpkgsums`
+
+  **Optional** Update checksums using `updpkgsums` before generating `.SRCINFO`.
+  The default value is `false`.
+
 - `aur_branch`
 
   **Optional** Branch to push to on the AUR remote. The default value is `master`

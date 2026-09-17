@@ -23,7 +23,8 @@ RUN pacman -Syu --noconfirm && \
     sed \
     ncurses \
     util-linux \
-    rsync && \
+    rsync \
+    pacman-contrib && \
     pacman -Scc --noconfirm
 
 COPY entrypoint.sh /entrypoint.sh
