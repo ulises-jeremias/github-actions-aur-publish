@@ -325,6 +325,11 @@ Coming from
 [KSXGitHub/github-actions-deploy-aur](https://github.com/KSXGitHub/github-actions-deploy-aur)?
 See [docs/MIGRATION.md](./docs/MIGRATION.md) for an input-by-input mapping.
 
+## More examples
+
+Tag releases, PR dry-runs, scheduled refreshes, and exact-mirror setups:
+[docs/EXAMPLES.md](./docs/EXAMPLES.md).
+
 ## Acknowledgments
 
 Design ideas such as the privilege-separated builder user, configurable
