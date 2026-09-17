@@ -15,6 +15,7 @@ Copy the draft's contents here as part of cutting a release.
 ### Security
 
 - Pinned third-party Actions by commit SHA in all workflows.
+- CI now lints workflow files with actionlint.
 
 ### Added
 
