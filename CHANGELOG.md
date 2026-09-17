@@ -12,6 +12,10 @@ Copy the draft's contents here as part of cutting a release.
 
 ## [Unreleased]
 
+### Security
+
+- Pinned third-party Actions by commit SHA in all workflows.
+
 ### Added
 
 - `asset_dir` input: exact-mirror mode for the AUR repository (must contain

@@ -54,9 +54,16 @@ Arch Linux container.
 ## PR checklist
 
 - [ ] ShellCheck passes (`shellcheck build.sh entrypoint.sh`)
+- [ ] Tests pass (`bash tests/run.sh`)
 - [ ] Docker image builds (`docker build -t aur-publish:dev .`)
 - [ ] `README.md` updated if inputs, outputs, or behavior changed
 - [ ] `CHANGELOG.md` entry added under `[Unreleased]` for user-facing changes
+
+## Pinned actions
+
+Third-party Actions are pinned by commit SHA (with the tag as a trailing
+comment, e.g. `actions/checkout@<sha> # v4`). Renovate updates the pins —
+never float a `uses:` back to a bare tag.
 
 ## Commit conventions
 
