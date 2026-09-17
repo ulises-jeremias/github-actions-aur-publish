@@ -44,6 +44,10 @@ inputs:
     description: "Run `makepkg -od` to update `pkgver`. Requires that the `pkgver()` function defined in the `PKGBUILD` file doesn't required any dependencies other than git"
     required: false
     default: "false"
+  aur_branch:
+    description: "Branch to push to on the AUR remote (AUR uses master)"
+    required: false
+    default: "master"
   push_retries:
     description: "How many times to retry git push (AUR maintenance / network flakes)"
     required: false
@@ -52,6 +56,11 @@ inputs:
     description: "Seconds to wait between push retries"
     required: false
     default: "20"
+outputs:
+  commit_sha:
+    description: "SHA of the commit published to the AUR"
+  package_url:
+    description: "URL of the AUR package page"
 runs:
   using: "docker"
   image: "Dockerfile"

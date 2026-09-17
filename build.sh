@@ -13,6 +13,7 @@ allow_empty_commits=$INPUT_ALLOW_EMPTY_COMMITS
 force_push=$INPUT_FORCE_PUSH
 ssh_keyscan_types=$INPUT_SSH_KEYSCAN_TYPES
 update_pkgver=$INPUT_UPDATE_PKGVER
+aur_branch=${INPUT_AUR_BRANCH:-master}
 push_retries=${INPUT_PUSH_RETRIES:-12}
 push_retry_seconds=${INPUT_PUSH_RETRY_SECONDS:-20}
 
@@ -79,6 +80,26 @@ if ! git clone -v "ssh://aur@aur.archlinux.org/${pkgname}.git" /tmp/local-repo 2
 fi
 echo '::endgroup::'
 
+echo "::group::Checking out branch $aur_branch"
+cd /tmp/local-repo
+git checkout -B "$aur_branch"
+cd - >/dev/null
+echo '::endgroup::'
+
+echo '::group::Validating PKGBUILD'
+if ! bash -n "$pkgbuild"; then
+  echo "::error::Invalid PKGBUILD: bash syntax check failed for $pkgbuild"
+  exit 4
+fi
+for _field in pkgname pkgver pkgrel arch license; do
+  if ! grep -Eq "^[[:space:]]*${_field}=" "$pkgbuild"; then
+    echo "::error::Invalid PKGBUILD: required field '${_field}=' not found in $pkgbuild"
+    exit 4
+  fi
+done
+echo "PKGBUILD syntax and required fields look good."
+echo '::endgroup::'
+
 echo '::group::Copying files into /tmp/local-repo'
 {
   echo "Copying $pkgbuild"
@@ -94,7 +115,7 @@ echo '::endgroup::'
 
 if [ "$update_pkgver" = "true" ]; then
   echo '::group::Updating pkgver'
-  echo 'Running `makepkg -od` to update pkgver'
+  echo "Running makepkg -od to update pkgver"
 
   tmp_makepkg=$(mktemp -d)
   cp -r /tmp/local-repo/. "$tmp_makepkg"
@@ -147,8 +168,7 @@ if ! git remote get-url aur >/dev/null 2>&1; then
   git remote add aur "ssh://aur@aur.archlinux.org/${pkgname}.git"
 fi
 
-# Prefer current branch name (empty clone defaults to master)
-branch=$(git rev-parse --abbrev-ref HEAD)
+branch=$aur_branch
 
 push_args=(-v)
 if [[ "$force_push" == "true" ]]; then
@@ -185,5 +205,14 @@ done
 if [[ "$ok" != "true" ]]; then
   echo "::error::Failed to push to AUR after ${push_retries} attempts"
   exit 1
+fi
+
+rev=$(git rev-parse HEAD)
+package_url="https://aur.archlinux.org/packages/${pkgname}"
+echo "commit_sha=${rev}"
+echo "package_url=${package_url}"
+if [[ -n "${GITHUB_OUTPUT:-}" ]]; then
+  echo "commit_sha=${rev}" >>"$GITHUB_OUTPUT"
+  echo "package_url=${package_url}" >>"$GITHUB_OUTPUT"
 fi
 echo '::endgroup::'
