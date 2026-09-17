@@ -1,5 +1,7 @@
 # Publish AUR package
 
+[![CI](https://github.com/ulises-jeremias/github-actions-aur-publish/actions/workflows/ci.yml/badge.svg)](https://github.com/ulises-jeremias/github-actions-aur-publish/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/ulises-jeremias/github-actions-aur-publish)](https://github.com/ulises-jeremias/github-actions-aur-publish/releases)
 [![Discord](https://img.shields.io/discord/1527933660764831825?label=Discord&logo=discord&logoColor=white)](https://discord.gg/bR5VyATgka)
 
 GitHub Action to publish a package to the [Arch User Repository (AUR)](https://aur.archlinux.org/).

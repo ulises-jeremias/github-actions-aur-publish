@@ -37,6 +37,7 @@ Copy the draft's contents here as part of cutting a release.
 - Bug/feature issue forms and a PR checklist template.
 - Pre-commit config (whitespace, YAML, ShellCheck, behavior tests) plus
   EditorConfig.
+- CI and release badges in README.
 
 ## [v1.1.0] - 2026-09-17
 
