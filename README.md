@@ -319,6 +319,12 @@ Release notes are drafted automatically as pull requests are merged, via
 The categorized draft becomes that release's notes when it's published, and
 its summary is copied into [`CHANGELOG.md`](./CHANGELOG.md).
 
+## Migrating
+
+Coming from
+[KSXGitHub/github-actions-deploy-aur](https://github.com/KSXGitHub/github-actions-deploy-aur)?
+See [docs/MIGRATION.md](./docs/MIGRATION.md) for an input-by-input mapping.
+
 ## Acknowledgments
 
 Design ideas such as the privilege-separated builder user, configurable
