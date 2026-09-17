@@ -86,6 +86,29 @@ jobs:
 
 **Tip:** This action does not generate PKGBUILD for you, you must generate it yourself (e.g. by using actions before this action).
 
+## Releases
+
+This project follows [Semantic Versioning](https://semver.org/). Two kinds of
+tags exist, and they're pinned differently:
+
+- **Exact tags** (`v1.2.3`) are immutable once published - the same tag
+  never points to different code. Pin to one of these if you want your
+  workflow to only ever pick up a change you've explicitly reviewed.
+- **Major tag** (`v1`) is a rolling tag that we move forward to the latest
+  compatible release. This is what the [example usage](#example-usage)
+  above and most consumers pin to - the standard convention for GitHub
+  Marketplace actions (the same one `actions/checkout` or
+  `actions/setup-node` use), so a `v1` pin keeps receiving non-breaking
+  fixes automatically without you having to bump anything.
+
+Release notes are drafted automatically as pull requests are merged, via
+[Release Drafter](https://github.com/release-drafter/release-drafter)
+(configured in
+[`.github/release-drafter.yml`](./.github/release-drafter.yml) and
+[`.github/workflows/release-drafter.yml`](./.github/workflows/release-drafter.yml)).
+The categorized draft becomes that release's notes when it's published, and
+its summary is copied into [`CHANGELOG.md`](./CHANGELOG.md).
+
 ## License
 
 [MIT](https://github.com/ulises-jeremias/github-actions-aur-publish/blob/main/LICENSE)
