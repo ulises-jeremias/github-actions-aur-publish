@@ -12,6 +12,8 @@ Copy the draft's contents here as part of cutting a release.
 
 ## [Unreleased]
 
+## [v1.1.0] - 2026-09-17
+
 ### Added
 
 - `aur_branch` input (default `master`) instead of a hardcoded push branch.
@@ -23,6 +25,7 @@ Copy the draft's contents here as part of cutting a release.
 - `.dockerignore` and digest-pinned base image (managed by Renovate).
 - README sections: Outputs, `assets` and matrix examples, permissions guidance,
   Troubleshooting, Used by, and Acknowledgments.
+- README Used by: added Create-Rust-App/aur-package (automation via its PR #8).
 
 ## [v1] - 2022-01-14
 
@@ -32,5 +35,6 @@ several fixes without an individual changelog entry per change - see the
 or [merged pull requests](https://github.com/ulises-jeremias/github-actions-aur-publish/pulls?q=is%3Apr+is%3Amerged)
 for the full detail up to this point.
 
-[Unreleased]: https://github.com/ulises-jeremias/github-actions-aur-publish/compare/v1...HEAD
+[Unreleased]: https://github.com/ulises-jeremias/github-actions-aur-publish/compare/v1.1.0...HEAD
+[v1.1.0]: https://github.com/ulises-jeremias/github-actions-aur-publish/releases/tag/v1.1.0
 [v1]: https://github.com/ulises-jeremias/github-actions-aur-publish/releases/tag/v1

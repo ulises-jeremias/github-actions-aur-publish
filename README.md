@@ -247,6 +247,10 @@ Real-world workflows using this action:
 - [Create-Vlang-App/create-vlang-app](https://github.com/Create-Vlang-App/create-vlang-app) —
   publishes `create-awesome-vlang-app` and `create-awesome-vlang-app-bin` via a
   matrix build (`.github/workflows/publish-aur.yml`)
+- [Create-Rust-App/aur-package](https://github.com/Create-Rust-App/aur-package) —
+  publishes `create-awesome-rust-app` and `create-awesome-rust-app-bin` via a
+  matrix build (`.github/workflows/publish-aur.yml`, landing via
+  [PR #8](https://github.com/Create-Rust-App/aur-package/pull/8))
 
 ## Releases
 
