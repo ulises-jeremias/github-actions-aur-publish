@@ -3,8 +3,9 @@
 set -o errexit -o pipefail -o nounset
 
 pkgname=$INPUT_PKGNAME
-pkgbuild=$INPUT_PKGBUILD
+pkgbuild=${INPUT_PKGBUILD:-}
 assets=$INPUT_ASSETS
+asset_dir=${INPUT_ASSET_DIR:-}
 commit_username=$INPUT_COMMIT_USERNAME
 commit_email=$INPUT_COMMIT_EMAIL
 ssh_private_key=$INPUT_SSH_PRIVATE_KEY
@@ -27,10 +28,26 @@ assert_non_empty() {
 }
 
 assert_non_empty inputs.pkgname "$pkgname"
-assert_non_empty inputs.pkgbuild "$pkgbuild"
 assert_non_empty inputs.commit_username "$commit_username"
 assert_non_empty inputs.commit_email "$commit_email"
 assert_non_empty inputs.ssh_private_key "$ssh_private_key"
+
+# asset_dir is an exact-mirror mode: it must contain the PKGBUILD and is
+# mutually exclusive with pkgbuild/assets (which only ever add files).
+if [[ -n "$asset_dir" ]]; then
+  if [[ -n "$pkgbuild" || -n "$assets" ]]; then
+    echo "::error::Invalid Value: inputs.asset_dir is mutually exclusive with inputs.pkgbuild and inputs.assets."
+    exit 1
+  fi
+  if [[ ! -f "$asset_dir/PKGBUILD" ]]; then
+    echo "::error::Invalid Value: inputs.asset_dir must contain a PKGBUILD file."
+    exit 1
+  fi
+  effective_pkgbuild="$asset_dir/PKGBUILD"
+else
+  assert_non_empty inputs.pkgbuild "$pkgbuild"
+  effective_pkgbuild="$pkgbuild"
+fi
 
 # Ignore "." and ".." to prevent errors when glob pattern for assets matches hidden files
 GLOBIGNORE=".:.."
@@ -87,13 +104,13 @@ cd - >/dev/null
 echo '::endgroup::'
 
 echo '::group::Validating PKGBUILD'
-if ! bash -n "$pkgbuild"; then
-  echo "::error::Invalid PKGBUILD: bash syntax check failed for $pkgbuild"
+if ! bash -n "$effective_pkgbuild"; then
+  echo "::error::Invalid PKGBUILD: bash syntax check failed for $effective_pkgbuild"
   exit 4
 fi
 for _field in pkgname pkgver pkgrel arch license; do
-  if ! grep -Eq "^[[:space:]]*${_field}=" "$pkgbuild"; then
-    echo "::error::Invalid PKGBUILD: required field '${_field}=' not found in $pkgbuild"
+  if ! grep -Eq "^[[:space:]]*${_field}=" "$effective_pkgbuild"; then
+    echo "::error::Invalid PKGBUILD: required field '${_field}=' not found in $effective_pkgbuild"
     exit 4
   fi
 done
@@ -101,15 +118,22 @@ echo "PKGBUILD syntax and required fields look good."
 echo '::endgroup::'
 
 echo '::group::Copying files into /tmp/local-repo'
-{
-  echo "Copying $pkgbuild"
-  cp -r "$pkgbuild" /tmp/local-repo/
-}
-# shellcheck disable=SC2086
-# Ignore quote rule because we need to expand glob patterns to copy $assets
-if [[ -n "$assets" ]]; then
-  echo 'Copying' $assets
-  cp -vrt /tmp/local-repo/ $assets
+if [[ -n "$asset_dir" ]]; then
+  echo "Mirroring $asset_dir (removals propagate)"
+  # Trailing slashes matter: sync the *contents* of asset_dir into the repo.
+  # .git is never synced; a .gitignore inside asset_dir is respected.
+  rsync -a --delete --exclude='.git/' --filter=':- .gitignore' "$asset_dir/" /tmp/local-repo/
+else
+  {
+    echo "Copying $pkgbuild"
+    cp -r "$pkgbuild" /tmp/local-repo/
+  }
+  # shellcheck disable=SC2086
+  # Ignore quote rule because we need to expand glob patterns to copy $assets
+  if [[ -n "$assets" ]]; then
+    echo 'Copying' $assets
+    cp -vrt /tmp/local-repo/ $assets
+  fi
 fi
 echo '::endgroup::'
 

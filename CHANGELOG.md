@@ -12,6 +12,12 @@ Copy the draft's contents here as part of cutting a release.
 
 ## [Unreleased]
 
+### Added
+
+- `asset_dir` input: exact-mirror mode for the AUR repository (must contain
+  PKGBUILD; mutually exclusive with `pkgbuild`/`assets`). `pkgbuild` is now
+  optional when `asset_dir` is used.
+
 ## [v1.1.0] - 2026-09-17
 
 ### Added

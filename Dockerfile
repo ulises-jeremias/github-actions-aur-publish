@@ -22,7 +22,8 @@ RUN pacman -Syu --noconfirm && \
     gzip \
     sed \
     ncurses \
-    util-linux && \
+    util-linux \
+    rsync && \
     pacman -Scc --noconfirm
 
 COPY entrypoint.sh /entrypoint.sh

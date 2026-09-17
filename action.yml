@@ -9,10 +9,15 @@ inputs:
     description: "AUR package name"
     required: true
   pkgbuild:
-    description: "Path to PKGBUILD file"
-    required: true
+    description: "Path to PKGBUILD file (not needed when asset_dir is used)"
+    required: false
+    default: ""
   assets:
     description: "Newline-separated glob patterns for additional files to be added to the AUR repository"
+    required: false
+    default: ""
+  asset_dir:
+    description: "Path to a directory whose contents mirror the AUR repository (must contain PKGBUILD; mutually exclusive with pkgbuild/assets)"
     required: false
     default: ""
   commit_username:
