@@ -26,6 +26,8 @@ Copy the draft's contents here as part of cutting a release.
 - `dry_run` input: prepare and preview the publish without committing or
   pushing (invalid values fail with exit code 6).
 - `package_version` output: `pkgver` of the published package.
+- `tests/run.sh`: durable behavior tests (input validation, PKGBUILD checks,
+  action/README consistency), wired into CI.
 
 ## [v1.1.0] - 2026-09-17
 

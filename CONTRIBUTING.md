@@ -29,6 +29,12 @@ Arch Linux container.
   shellcheck build.sh entrypoint.sh
   ```
 
+- Run the behavior tests:
+
+  ```bash
+  bash tests/run.sh
+  ```
+
 - Validate the action metadata:
 
   ```bash

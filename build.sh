@@ -39,6 +39,7 @@ assert_non_empty inputs.ssh_private_key "$ssh_private_key"
 
 # asset_dir is an exact-mirror mode: it must contain the PKGBUILD and is
 # mutually exclusive with pkgbuild/assets (which only ever add files).
+# begin-tests:mutual-exclusion
 if [[ -n "$asset_dir" ]]; then
   if [[ -n "$pkgbuild" || -n "$assets" ]]; then
     echo "::error::Invalid Value: inputs.asset_dir is mutually exclusive with inputs.pkgbuild and inputs.assets."
@@ -53,6 +54,7 @@ else
   assert_non_empty inputs.pkgbuild "$pkgbuild"
   effective_pkgbuild="$pkgbuild"
 fi
+# end-tests:mutual-exclusion
 
 # Ignore "." and ".." to prevent errors when glob pattern for assets matches hidden files
 GLOBIGNORE=".:.."
@@ -109,6 +111,7 @@ cd - >/dev/null
 echo '::endgroup::'
 
 echo '::group::Validating PKGBUILD'
+# begin-tests:pkgbuild-validation
 if ! bash -n "$effective_pkgbuild"; then
   echo "::error::Invalid PKGBUILD: bash syntax check failed for $effective_pkgbuild"
   exit 4
@@ -120,6 +123,7 @@ for _field in pkgname pkgver pkgrel arch license; do
   fi
 done
 echo "PKGBUILD syntax and required fields look good."
+# end-tests:pkgbuild-validation
 echo '::endgroup::'
 
 echo '::group::Copying files into /tmp/local-repo'

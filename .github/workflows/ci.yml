@@ -43,3 +43,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build Docker image
         run: docker build -t aur-publish:ci .
+
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run behavior tests
+        run: bash tests/run.sh
