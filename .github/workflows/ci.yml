@@ -43,6 +43,8 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Build Docker image
         run: docker build -t aur-publish:ci .
+      - name: Verify output transfer across container users
+        run: bash tests/docker-output-bridge.sh
 
   tests:
     runs-on: ubuntu-latest
