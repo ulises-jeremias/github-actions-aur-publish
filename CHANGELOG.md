@@ -12,6 +12,12 @@ Copy the draft's contents here as part of cutting a release.
 
 ## [Unreleased]
 
+### Fixed
+
+- Transfer GitHub Actions outputs through a builder-owned staging file so the
+  unprivileged package process can publish to AUR without writing directly to
+  the runner-owned `GITHUB_OUTPUT` file.
+
 ## [v1.2.0] - 2026-09-17
 
 ### Security
