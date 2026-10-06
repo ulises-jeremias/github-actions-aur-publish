@@ -78,6 +78,26 @@ check "valid PKGBUILD passes" 0 "$(run_validation /tmp/gaap-tests/PKGBUILD.good)
 check "PKGBUILD missing fields fails" 4 "$(run_validation /tmp/gaap-tests/PKGBUILD.bad)"
 check "PKGBUILD syntax error fails" 4 "$(run_validation /tmp/gaap-tests/PKGBUILD.syntax)"
 
+# --- output bridge: transfer staged builder outputs to the runner file ---
+output_transfer_block() {
+  sed -n '/# begin-tests:output-transfer/,/# end-tests:output-transfer/p' entrypoint.sh
+}
+
+output_source=/tmp/gaap-tests/builder-output
+output_target=/tmp/gaap-tests/github-output
+printf 'commit_sha=abc123\npackage_version=1.2.3\n' > "$output_source"
+printf 'existing=value\n' > "$output_target"
+transfer=$(output_transfer_block)
+if bash -c "$transfer
+transfer_github_output '$output_source' '$output_target'"; then
+  check "staged outputs transfer to the runner file" 0 0
+else
+  check "staged outputs transfer to the runner file" 0 1
+fi
+expected_output=$'existing=value\ncommit_sha=abc123\npackage_version=1.2.3'
+actual_output=$(cat "$output_target")
+check "output transfer appends without replacing existing values" "$expected_output" "$actual_output"
+
 # --- action.yml / README consistency ---
 if python3 - <<'EOF'
 import sys
